@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
+import movieRoutes from "./routes/movieRoutes.js";
 
 dotenv.config();
 
@@ -14,6 +15,8 @@ app.get("/", (req, res) => {
     message: "Welcome to CineVerse API",
   });
 });
+
+app.use("/api/movies", movieRoutes);
 
 const startServer = async () => {
   await connectDB();
