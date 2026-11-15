@@ -116,3 +116,15 @@ export const loginUser = async (req, res) => {
     });
   }
 };
+
+export const getCurrentUser = async (req, res) => {
+  return res.status(200).json({
+    message: "Authenticated successfully.",
+    user: {
+      id: req.user._id,
+      username: req.user.username,
+      email: req.user.email,
+      role: req.user.role,
+    },
+  });
+};
