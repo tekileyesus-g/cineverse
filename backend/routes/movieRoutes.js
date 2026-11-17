@@ -1,4 +1,6 @@
 import express from "express";
+import protect from "../middleware/authMiddleware.js";
+import adminOnly from "../middleware/adminMiddleware.js";
 import {
   createMovie,
   getMovies,
@@ -9,18 +11,14 @@ import {
 
 const router = express.Router();
 
-// POST /api/movies
-router.post("/", createMovie);
-
-// GET /api/movies
+// Anyone can view movies
 router.get("/", getMovies);
-
-// GET /api/movies/:id
 router.get("/:id", getMovieById);
 
-// PUT /api/movies/:id
-router.put("/:id", updateMovie);
+// Only admins can manage movies
+router.post("/", protect, adminOnly, createMovie);
+router.put("/:id", protect, adminOnly, updateMovie);
+router.delete("/:id", protect, adminOnly, deleteMovie);
 
-// DELETE /api/movies/:id
-router.delete("/:id", deleteMovie);
+
 export default router;
